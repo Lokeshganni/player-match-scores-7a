@@ -19,7 +19,7 @@ const initializeServer = async () => {
       console.log("Server running at PORT 3000");
     });
   } catch (e) {
-    console.log("DB ERROR: ${e.message}");
+    console.log(`DB ERROR: ${e.message}`);
   }
 };
 
@@ -89,7 +89,7 @@ app.get("/players/:playerId/matches", async (req, res) => {
   const api5Query = `
     SELECT DISTINCT match_details.match_id as matchId, match_details.match ,match_details.year
     FROM player_match_score 
-    JOIN match_details
+    NATURAl JOIN match_details
     WHERE player_match_score.player_id=${playerId};`;
   const api5Res = await db.all(api5Query);
   res.send(api5Res);
@@ -102,7 +102,7 @@ app.get("/matches/:matchId/players", async (req, res) => {
   const api6Query = `
     SELECT DISTINCT player_details.player_id as playerId,player_details.player_name as playerName
     FROM player_match_score 
-    JOIN player_details
+    NATURAL JOIN player_details
     WHERE match_id=${matchId};`;
   const api6Res = await db.all(api6Query);
   res.send(api6Res);
